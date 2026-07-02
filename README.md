@@ -7,13 +7,11 @@ It connects **candidates and recruiters** through a clean, role-based experience
 
 ## 🌐 Live Demo
 
-👉 https://your-vercel-link.vercel.app
+[👉 https://your-vercel-link.vercel.app](https://job-flow-ai-amber.vercel.app/)
 
 ---
 
 ## 📸 Preview
-
-(Add screenshots here if possible)
 
 - Home Page
 - Jobs Listing Page
