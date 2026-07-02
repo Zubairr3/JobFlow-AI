@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 JobFlow AI — Smart AI Job Board Platform
 
-## Getting Started
+JobFlow AI is a modern AI-powered job board built with Next.js.  
+It connects **candidates and recruiters** through a clean, role-based experience with smart UI/UX and scalable architecture.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌐 Live Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+👉 https://your-vercel-link.vercel.app
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📸 Preview
 
-## Learn More
+(Add screenshots here if possible)
 
-To learn more about Next.js, take a look at the following resources:
+- Home Page
+- Jobs Listing Page
+- Job Details Page
+- Login / Signup Modal
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ✨ Key Features
 
-## Deploy on Vercel
+### 👨‍💼 Candidate Features
+- Browse jobs from top companies
+- Search jobs instantly
+- Filter by job type (Remote / Hybrid / On-site)
+- Save favorite jobs (LocalStorage)
+- Apply for jobs via modal UI
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🧑‍💼 Recruiter Features
+- Role-based dashboard system
+- Recruiter UI state handling
+- Post Job button (UI ready)
+- Separate recruiter experience flow
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔐 Authentication (Frontend Logic)
+
+- Login / Signup modal system
+- Role selection (Candidate / Recruiter)
+- Session stored using LocalStorage
+- Dynamic UI rendering based on role
+
+---
+
+## 💡 UX / UI Highlights
+
+- Modern dark theme UI
+- Smooth animations (Framer Motion)
+- Responsive design for all devices
+- Interactive job cards
+- Clean modal-based interactions
+- Accessible form components
+
+---
+
+## 🧠 Tech Stack
+
+- Next.js 14 (App Router)
+- React.js
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Radix UI
+- Lucide Icons
+- Sonner (toasts)
+
+---
+
+## ⚙️ CI/CD Pipeline
+
+- GitHub Actions for automation
+- Vercel deployment integration
+- Auto build on every push to main branch
+
+---
+
+## 🚀 Deployment Flow
+
+```text
+GitHub Push → GitHub Actions → Build → Vercel Deploy → Live App
+## 📂 Project Structure
+
+/app              → App Router pages
+/components       → Reusable UI components
+/components/ui    → Radix + shadcn UI components
+/lib              → Utility functions
+/public           → Static assets
+
+## 🔮 Future Improvements
+
+- Add backend authentication (NextAuth / Clerk)
+- Integrate database (PostgreSQL / Neon)
+- Enable recruiter job posting (CRUD system)
+- AI-powered job recommendations
+- Resume upload and parsing system
+- Email notifications for job alerts
