@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -16,22 +16,25 @@ type Job = {
 };
 
 export default function SavedJobsPage() {
-  const [jobs, setJobs] = useState<Job[]>([]);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("savedJobs");
+  // ✅ FIX: lazy initialization (NO useEffect needed)
+  const [jobs, setJobs] = useState<Job[]>(() => {
+    if (typeof window === "undefined") return [];
 
-    if (saved) {
-      setJobs(JSON.parse(saved));
+    try {
+      const saved = localStorage.getItem("savedJobs");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
     }
-  }, []);
+  });
 
   function removeJob(id: number) {
-    const updated = jobs.filter((job) => job.id !== id);
-
-    setJobs(updated);
-
-    localStorage.setItem("savedJobs", JSON.stringify(updated));
+    setJobs((prev) => {
+      const updated = prev.filter((job) => job.id !== id);
+      localStorage.setItem("savedJobs", JSON.stringify(updated));
+      return updated;
+    });
   }
 
   return (
@@ -39,15 +42,12 @@ export default function SavedJobsPage() {
       <Navbar />
 
       <main className="min-h-screen bg-slate-950 text-white">
-
         <div className="mx-auto max-w-6xl px-6 py-16">
 
-          <h1 className="text-5xl font-bold">
-            Saved Jobs
-          </h1>
+          <h1 className="text-5xl font-bold">Saved Jobs</h1>
 
           <p className="mt-3 text-slate-400">
-            Jobs you've bookmarked.
+            Jobs you have bookmarked.
           </p>
 
           {jobs.length === 0 ? (
@@ -75,7 +75,6 @@ export default function SavedJobsPage() {
             <div className="mt-10 grid gap-8 md:grid-cols-2">
 
               {jobs.map((job) => (
-
                 <div
                   key={job.id}
                   className="rounded-3xl border border-slate-800 bg-slate-900 p-8"
@@ -84,15 +83,8 @@ export default function SavedJobsPage() {
                   <div className="flex justify-between">
 
                     <div>
-
-                      <h2 className="text-2xl font-bold">
-                        {job.title}
-                      </h2>
-
-                      <p className="text-slate-400">
-                        {job.company}
-                      </p>
-
+                      <h2 className="text-2xl font-bold">{job.title}</h2>
+                      <p className="text-slate-400">{job.company}</p>
                     </div>
 
                     <button
@@ -105,36 +97,26 @@ export default function SavedJobsPage() {
                   </div>
 
                   <div className="mt-6 flex items-center text-slate-400">
-
                     <MapPin className="mr-2 h-4 w-4" />
-
                     {job.location}
-
                   </div>
 
                   <div className="mt-3 flex items-center text-slate-400">
-
                     <Briefcase className="mr-2 h-4 w-4" />
-
                     {job.type}
-
                   </div>
 
                   <div className="mt-6 font-bold">
-
                     {job.salary}
-
                   </div>
 
                 </div>
-
               ))}
 
             </div>
           )}
 
         </div>
-
       </main>
 
       <Footer />

@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ApplyModal from "@/components/ApplyModal";
+
 import {
-  Search,
   MapPin,
   Briefcase,
-  Filter,
+  IndianRupee,
+  Clock,
+  Bookmark,
   Building2,
+  CheckCircle2,
+  ArrowLeft,
 } from "lucide-react";
 
 const jobs = [
@@ -19,7 +25,36 @@ const jobs = [
     location: "Bangalore",
     salary: "₹18 LPA",
     type: "Remote",
+    experience: "2+ Years",
+    description:
+      "Join Google's engineering team to build scalable and beautiful web applications using React, Next.js and TypeScript.",
+
+    skills: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "REST API",
+      "Git",
+    ],
+
+    responsibilities: [
+      "Develop modern React applications",
+      "Work closely with UI/UX designers",
+      "Write reusable components",
+      "Optimize application performance",
+      "Review code and mentor juniors",
+    ],
+
+    benefits: [
+      "Health Insurance",
+      "Flexible Working Hours",
+      "Remote Work",
+      "Stock Options",
+      "Annual Bonus",
+    ],
   },
+
   {
     id: 2,
     title: "Backend Engineer",
@@ -27,7 +62,35 @@ const jobs = [
     location: "Hyderabad",
     salary: "₹22 LPA",
     type: "Hybrid",
+    experience: "3+ Years",
+
+    description:
+      "Build scalable backend systems using Node.js and cloud technologies.",
+
+    skills: [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Docker",
+      "AWS",
+    ],
+
+    responsibilities: [
+      "Develop APIs",
+      "Database Design",
+      "Authentication",
+      "Deploy Services",
+      "Performance Optimization",
+    ],
+
+    benefits: [
+      "Health Insurance",
+      "Free Lunch",
+      "Bonus",
+      "Hybrid Work",
+    ],
   },
+
   {
     id: 3,
     title: "AI Engineer",
@@ -35,199 +98,314 @@ const jobs = [
     location: "Remote",
     salary: "₹35 LPA",
     type: "Remote",
-  },
-  {
-    id: 4,
-    title: "Cloud Engineer",
-    company: "Amazon",
-    location: "Chennai",
-    salary: "₹28 LPA",
-    type: "Hybrid",
-  },
-  {
-    id: 5,
-    title: "UI/UX Designer",
-    company: "Adobe",
-    location: "Pune",
-    salary: "₹16 LPA",
-    type: "On Site",
-  },
-  {
-    id: 6,
-    title: "Data Scientist",
-    company: "Netflix",
-    location: "Remote",
-    salary: "₹40 LPA",
-    type: "Remote",
+    experience: "4+ Years",
+
+    description:
+      "Work on cutting-edge AI products and large language model applications.",
+
+    skills: [
+      "Python",
+      "Machine Learning",
+      "LLMs",
+      "PyTorch",
+      "Docker",
+    ],
+
+    responsibilities: [
+      "Train AI Models",
+      "Prompt Engineering",
+      "Model Evaluation",
+      "Deploy AI Services",
+    ],
+
+    benefits: [
+      "Remote",
+      "High Salary",
+      "Learning Budget",
+      "Equipment",
+    ],
   },
 ];
 
-export default function JobsPage() {
-  const [search, setSearch] = useState("");
-  const [type, setType] = useState("All");
+export default async function JobDetails({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
-  const filteredJobs = jobs.filter((job) => {
-    const searchMatch = `${job.title} ${job.company} ${job.location}`
-      .toLowerCase()
-      .includes(search.toLowerCase());
+  const job =
+    jobs.find((item) => item.id === Number(id)) || jobs[0];
 
-    const typeMatch = type === "All" || job.type === type;
-
-    return searchMatch && typeMatch;
-  });
+  const similarJobs = jobs.filter((j) => j.id !== job.id);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white">
+    <>
+      <Navbar />
 
-      <div className="mx-auto max-w-7xl px-6 py-14">
+      <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white">
 
-        <h1 className="text-5xl font-bold">
-          Browse Jobs
-        </h1>
+        <div className="mx-auto max-w-7xl px-6 py-14">
 
-        <p className="mt-3 text-slate-400">
-          Discover opportunities from the world's leading companies.
-        </p>
+          <Link
+            href="/jobs"
+            className="mb-10 inline-flex items-center gap-2 text-blue-400 hover:text-blue-300"
+          >
+            <ArrowLeft size={18} />
+            Back to Jobs
+          </Link>
 
-        {/* Search */}
+          <div className="grid gap-10 lg:grid-cols-3">
 
-        <div className="mt-10 grid gap-4 md:grid-cols-4">
+            {/* LEFT */}
 
-          <div className="md:col-span-3 flex rounded-2xl border border-slate-700 bg-slate-900 p-3">
-
-            <Search className="ml-2 mt-3 text-slate-400" />
-
-            <input
-              aria-label="Search jobs"
-              type="text"
-              placeholder="Search jobs..."
-              className="flex-1 bg-transparent px-4 outline-none"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-
-          </div>
-
-          <div className="flex items-center rounded-2xl border border-slate-700 bg-slate-900 px-4">
-
-            <Filter className="mr-3 text-slate-400" />
-
-            <label htmlFor="jobType" className="sr-only">
-              Job Type
-            </label>
-
-            <select
-              id="jobType"
-              title="Job Type"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="w-full bg-transparent outline-none"
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="lg:col-span-2 rounded-3xl border border-slate-800 bg-slate-900 p-10"
             >
-              <option className="text-black">All</option>
-              <option className="text-black">Remote</option>
-              <option className="text-black">Hybrid</option>
-              <option className="text-black">On Site</option>
-            </select>
+              <div className="flex items-center gap-5">
+
+                <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-600 text-3xl font-bold">
+
+                  {job.company.charAt(0)}
+
+                </div>
+
+                <div>
+
+                  <h1 className="text-4xl font-bold">
+
+                    {job.title}
+
+                  </h1>
+
+                  <p className="mt-2 text-lg text-slate-400">
+
+                    {job.company}
+
+                  </p>
+
+                </div>
+
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-6 text-slate-300">
+
+                <div className="flex items-center gap-2">
+                  <MapPin size={18} />
+                  {job.location}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <IndianRupee size={18} />
+                  {job.salary}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Briefcase size={18} />
+                  {job.type}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Clock size={18} />
+                  {job.experience}
+                </div>
+
+              </div>
+
+              <section className="mt-10">
+
+                <h2 className="text-2xl font-bold">
+                  Job Description
+                </h2>
+
+                <p className="mt-4 leading-8 text-slate-300">
+                  {job.description}
+                </p>
+
+              </section>
+
+              <section className="mt-10">
+
+                <h2 className="text-2xl font-bold">
+                  Skills Required
+                </h2>
+
+                <div className="mt-5 flex flex-wrap gap-3">
+
+                  {job.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full bg-blue-600/20 px-4 py-2 text-blue-300"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+
+                </div>
+
+              </section>
+
+              <section className="mt-10">
+
+                <h2 className="text-2xl font-bold">
+                  Responsibilities
+                </h2>
+
+                <div className="mt-5 space-y-4">
+
+                  {job.responsibilities.map((item) => (
+                    <div
+                      key={item}
+                      className="flex items-center gap-3"
+                    >
+                      <CheckCircle2 className="text-green-400" />
+                      {item}
+                    </div>
+                  ))}
+
+                </div>
+
+              </section>
+
+              <section className="mt-10">
+
+                <h2 className="text-2xl font-bold">
+                  Benefits
+                </h2>
+
+                <div className="mt-5 space-y-4">
+
+                  {job.benefits.map((item) => (
+                    <div
+                      key={item}
+                      className="flex items-center gap-3"
+                    >
+                      <CheckCircle2 className="text-blue-400" />
+                      {item}
+                    </div>
+                  ))}
+
+                </div>
+
+              </section>
+
+            </motion.div>
+
+            {/* RIGHT */}
+
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="h-fit rounded-3xl border border-slate-800 bg-slate-900 p-8 lg:sticky lg:top-24"
+            >
+              <h2 className="text-2xl font-bold">
+                Job Overview
+              </h2>
+
+              <div className="mt-8 space-y-5">
+
+                <Info title="Company" value={job.company} />
+
+                <Info title="Location" value={job.location} />
+
+                <Info title="Salary" value={job.salary} />
+
+                <Info title="Experience" value={job.experience} />
+
+                <Info title="Job Type" value={job.type} />
+
+              </div>
+
+              <div className="mt-10 space-y-4">
+
+                <ApplyModal />
+
+                <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700 py-3 hover:bg-slate-800">
+                  <Bookmark size={18} />
+                  Save Job
+                </button>
+
+              </div>
+
+            </motion.div>
 
           </div>
 
-        </div>
+          {/* Similar Jobs */}
 
-        <p className="mt-8 text-slate-400">
-          {filteredJobs.length} Jobs Found
-        </p>
+          <section className="mt-20">
 
-        {/* Cards */}
+            <h2 className="mb-8 text-3xl font-bold">
+              Similar Jobs
+            </h2>
 
-        <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-3">
 
-          {filteredJobs.length > 0 ? (
-
-            filteredJobs.map((job, index) => (
-
-              <motion.div
-                key={job.id}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.08 }}
-              >
-
+              {similarJobs.map((item) => (
                 <Link
-                  href={`/jobs/${job.id}`}
-                  className="block rounded-3xl border border-slate-800 bg-slate-900 p-8 transition hover:-translate-y-2 hover:border-blue-500"
+                  key={item.id}
+                  href={`/jobs/${item.id}`}
+                  className="rounded-3xl border border-slate-800 bg-slate-900 p-6 transition hover:border-blue-500"
                 >
+                  <div className="flex items-center gap-3">
 
-                  <div className="flex items-center justify-between">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 font-bold">
 
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-xl font-bold">
-                      {job.company.charAt(0)}
+                      {item.company.charAt(0)}
+
                     </div>
 
-                    <span className="rounded-full bg-green-500/20 px-3 py-1 text-sm text-green-400">
-                      Hiring
-                    </span>
+                    <div>
+
+                      <h3 className="font-bold">
+                        {item.title}
+                      </h3>
+
+                      <p className="text-slate-400">
+                        {item.company}
+                      </p>
+
+                    </div>
 
                   </div>
 
-                  <h2 className="mt-6 text-2xl font-bold">
-                    {job.title}
-                  </h2>
+                  <div className="mt-5 flex items-center gap-2 text-slate-400">
 
-                  <div className="mt-2 flex items-center text-slate-400">
-                    <Building2 className="mr-2 h-4 w-4" />
-                    {job.company}
-                  </div>
+                    <Building2 size={16} />
 
-                  <div className="mt-3 flex items-center text-slate-400">
-                    <MapPin className="mr-2 h-4 w-4" />
-                    {job.location}
-                  </div>
-
-                  <div className="mt-3 flex items-center text-slate-400">
-                    <Briefcase className="mr-2 h-4 w-4" />
-                    {job.type}
-                  </div>
-
-                  <div className="mt-8 flex items-center justify-between">
-
-                    <span className="font-bold">
-                      {job.salary}
-                    </span>
-
-                    <span className="rounded-xl bg-blue-600 px-4 py-2">
-                      View Job
-                    </span>
+                    {item.location}
 
                   </div>
 
                 </Link>
-
-              </motion.div>
-
-            ))
-
-          ) : (
-
-            <div className="col-span-3 rounded-3xl border border-slate-800 bg-slate-900 p-16 text-center">
-
-              <Search className="mx-auto mb-5 h-14 w-14 text-slate-500" />
-
-              <h2 className="text-3xl font-bold">
-                No Jobs Found
-              </h2>
-
-              <p className="mt-3 text-slate-400">
-                Try another search keyword.
-              </p>
+              ))}
 
             </div>
 
-          )}
+          </section>
 
         </div>
 
-      </div>
+      </main>
 
-    </main>
+      <Footer />
+    </>
+  );
+}
+
+function Info({
+  title,
+  value,
+}: {
+  title: string;
+  value: string;
+}) {
+  return (
+    <div className="flex justify-between border-b border-slate-800 pb-3">
+      <span className="text-slate-400">{title}</span>
+      <span className="font-semibold">{value}</span>
+    </div>
   );
 }

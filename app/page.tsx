@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import {
   Search,
   MapPin,
@@ -79,42 +81,13 @@ export default function Home() {
   );
 
   return (
+    <>
+    <Navbar />
     <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white">
 
       {/* Navbar */}
 
-      <nav className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">
-
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-
-          <h1 className="text-2xl font-bold">
-            JobFlow AI
-          </h1>
-
-          <div className="hidden gap-8 md:flex">
-
-            <Link href="/jobs" className="hover:text-blue-400">
-              Jobs
-            </Link>
-
-            <Link href="/companies" className="hover:text-blue-400">
-              Companies
-            </Link>
-
-            <Link href="/dashboard" className="hover:text-blue-400">
-              Dashboard
-            </Link>
-
-          </div>
-
-          <button className="rounded-xl bg-blue-600 px-5 py-2 hover:bg-blue-700">
-            Login
-          </button>
-
-        </div>
-
-      </nav>
-
+     
       {/* Hero */}
 
       <motion.section
@@ -150,7 +123,7 @@ export default function Home() {
 
           <p className="mx-auto mt-8 max-w-2xl text-lg text-slate-400">
 
-            Discover thousands of opportunities from the world's leading
+            Discover thousands of opportunities from the world s leading
             companies with AI-powered search.
 
           </p>
@@ -328,7 +301,32 @@ export default function Home() {
         </div>
 
       </section>
+      {/* CTA Section */}
+
+      {/* CTA Section */}
+
+      <section className="mx-auto mt-24 max-w-6xl px-6 pb-20">
+        <div className="rounded-[40px] bg-gradient-to-r from-blue-600 to-indigo-600 p-14 text-center">
+          <h2 className="text-5xl font-bold">
+            Ready to Start Your Career?
+          </h2>
+
+          <p className="mt-6 text-lg text-blue-100">
+            Join thousands of professionals using JobFlow AI.
+          </p>
+
+          <Link
+            href="/jobs"
+            className="mt-10 inline-block rounded-xl bg-white px-8 py-4 font-semibold text-slate-900 transition hover:scale-105"
+          >
+            Explore Jobs
+          </Link>
+        </div>
+      </section>
 
     </main>
-  );
+
+    <Footer />
+  </>
+);
 }

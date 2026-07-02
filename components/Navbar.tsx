@@ -8,8 +8,23 @@ export default function Navbar() {
   const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedRole = localStorage.getItem("role");
-    setRole(storedRole);
+    const updateRole = () => {
+      setRole(localStorage.getItem("role"));
+    };
+
+    // initial load
+    updateRole();
+
+    // listen for changes from other tabs
+    window.addEventListener("storage", updateRole);
+
+    // ALSO listen for same-tab updates (IMPORTANT FIX)
+    const interval = setInterval(updateRole, 500);
+
+    return () => {
+      window.removeEventListener("storage", updateRole);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
